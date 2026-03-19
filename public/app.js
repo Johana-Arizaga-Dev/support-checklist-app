@@ -1,5 +1,5 @@
-const USER_INITIALS = 'JDG';       // aquí cambias las iniciales
-const DEPARTMENT_NAME = 'Soporte'; // aquí cambias el nombre del área
+const USER_INITIALS = 'MAEV';       // aquí cambias las iniciales
+const DEPARTMENT_NAME = 'CPS Intervention'; // aquí cambias el nombre del área
 
 const activitiesList = document.getElementById('activitiesList');
 const addActivityForm = document.getElementById('addActivityForm');
