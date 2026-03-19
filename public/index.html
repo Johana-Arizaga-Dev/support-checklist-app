@@ -3,119 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support Flow Checklist</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Checklist de Soporte</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-
-  <main class="app-shell">
-    <section class="hero-card glass">
+  <div class="app-shell">
+    <header class="topbar">
       <div>
-        <p class="eyebrow">Panel operativo</p>
-        <h1>Checklist de soporte técnico</h1>
-        <p class="hero-copy">
-          Flujo obligatorio de atención para clientes. Puedes administrar las actividades guardadas en la nube,
-          pero el progreso del checklist no se almacena.
-        </p>
+        <p class="eyebrow">Checklist operativo</p>
+        <h1>Soporte técnico</h1>
       </div>
-
-      <div class="meta-grid">
-        <article class="meta-box">
-          <span>Iniciales configuradas</span>
-          <strong id="configuredInitials">JDG</strong>
-        </article>
-        <article class="meta-box">
-          <span>Departamento configurado</span>
-          <strong id="configuredDepartment">Soporte Técnico</strong>
-        </article>
-        <article class="meta-box status-box" id="globalStatusBox">
-          <span>Estado del checklist</span>
-          <strong id="globalStatusText">Cargando actividades...</strong>
-        </article>
+      <div class="user-badge">
+        <span id="initialsBadge">JDG</span>
       </div>
-    </section>
+    </header>
 
-    <section class="content-grid">
-      <aside class="glass side-panel">
+    <main class="layout">
+      <section class="panel panel-main">
         <div class="panel-header">
           <div>
-            <p class="eyebrow">Administración</p>
-            <h2>Actividades guardadas</h2>
+            <h2>Checklist del servicio</h2>
+            <p class="panel-subtitle">Completa cada paso obligatorio antes de cerrar la atención.</p>
+          </div>
+          <div class="meta-chip" id="departmentChip">Soporte</div>
+        </div>
+
+        <div id="statusBox" class="status-box incomplete">
+          Faltan actividades por completar
+        </div>
+
+        <div class="list-wrapper">
+          <div id="activitiesList" class="activities-list"></div>
+        </div>
+
+        <div class="bottom-actions">
+          <button id="clearChecklistBtn" class="btn btn-secondary" type="button">
+            Vaciar checklist
+          </button>
+        </div>
+      </section>
+
+      <aside class="panel panel-side">
+        <div class="panel-header side-header">
+          <div>
+            <h2>Administrar actividades</h2>
+            <p class="panel-subtitle">Aquí sí se guardan las actividades en MongoDB.</p>
           </div>
         </div>
 
-        <form id="activityForm" class="activity-form">
-          <label>
-            <span>Nombre de la actividad</span>
-            <input id="activityLabel" type="text" placeholder="Ej. Validar acceso remoto" maxlength="120" required />
-          </label>
+        <form id="addActivityForm" class="activity-form">
+          <div class="field">
+            <label for="activityLabel">Actividad</label>
+            <input
+              id="activityLabel"
+              name="activityLabel"
+              type="text"
+              maxlength="120"
+              placeholder="Ej. Confirmar conexión remota"
+              required
+            />
+          </div>
 
-          <label>
-            <span>Tipo de actividad</span>
-            <select id="activityType">
-              <option value="check">Check (solo palomita)</option>
-              <option value="text">Texto (captura obligatoria)</option>
+          <div class="field">
+            <label for="activityType">Tipo</label>
+            <select id="activityType" name="activityType">
+              <option value="check">Check</option>
+              <option value="text">Texto</option>
             </select>
-          </label>
+          </div>
 
-          <button type="submit" class="btn btn-primary">Agregar actividad</button>
+          <button class="btn btn-primary" type="submit">Agregar actividad</button>
         </form>
 
-        <div class="saved-list-wrapper">
-          <div class="saved-list-title-row">
-            <h3>Lista base</h3>
-            <span id="savedCountBadge" class="badge">0 actividades</span>
-          </div>
-          <ul id="savedActivities" class="saved-list"></ul>
+        <div class="saved-box">
+          <div class="saved-box-title">Actividades configuradas</div>
+          <div id="savedSummary" class="saved-summary">0 actividades registradas</div>
+          <p class="saved-note">
+            Se guardan solo las actividades. Los checks y textos capturados no se almacenan.
+          </p>
         </div>
       </aside>
-
-      <section class="glass checklist-panel">
-        <div class="panel-header checklist-header">
-          <div>
-            <p class="eyebrow">Ejecución</p>
-            <h2>Checklist operativo</h2>
-          </div>
-          <button id="resetChecklistButton" class="btn btn-secondary" type="button">Vaciar checklist</button>
-        </div>
-
-        <div class="status-banner" id="checklistBanner">
-          Faltan actividades por completar.
-        </div>
-
-        <div id="checklistItems" class="checklist-items"></div>
-      </section>
-    </section>
-  </main>
-
-  <template id="savedActivityTemplate">
-    <li class="saved-item">
-      <div>
-        <p class="saved-item-label"></p>
-        <small class="saved-item-type"></small>
-      </div>
-      <button class="icon-btn delete-btn" type="button" title="Eliminar actividad">✕</button>
-    </li>
-  </template>
-
-  <template id="checkItemTemplate">
-    <article class="check-card">
-      <div class="check-card-top">
-        <div>
-          <span class="step-pill"></span>
-          <h3 class="check-item-label"></h3>
-        </div>
-        <span class="type-pill"></span>
-      </div>
-
-      <div class="check-item-body"></div>
-    </article>
-  </template>
+    </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
