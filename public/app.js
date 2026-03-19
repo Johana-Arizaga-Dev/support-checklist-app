@@ -1,5 +1,5 @@
-const USER_INITIALS = 'MAEV';       // aquí cambias las iniciales
-const DEPARTMENT_NAME = 'CPS Intervention'; // aquí cambias el nombre del área
+const USER_INITIALS = 'ME';       // aquí cambias las iniciales
+const DEPARTMENT_NAME = 'CPS Intervention -'; // aquí cambias el nombre del área
 
 const activitiesList = document.getElementById('activitiesList');
 const addActivityForm = document.getElementById('addActivityForm');
@@ -21,7 +21,7 @@ function formatDateCode(date = new Date()) {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
   const day = String(date.getDate()).padStart(2, '0');
   const month = months[date.getMonth()];
-  const year = String(date.getFullYear()).slice(-2);
+  const year = String(date.getFullYear());
   return `${day}${month}${year}`;
 }
 
@@ -144,7 +144,7 @@ function createTextRow(item) {
       return;
     }
 
-    const finalText = `${textValue} ${formatDateCode()} ${DEPARTMENT_NAME}`;
+    const finalText = `${DEPARTMENT_NAME} ${USER_INITIALS} ${formatDateCode()} ${textValue}`;
 
     try {
       await navigator.clipboard.writeText(finalText);
