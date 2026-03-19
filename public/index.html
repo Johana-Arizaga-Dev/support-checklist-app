@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Flow Checklist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <main class="app-shell">
+    <section class="hero-card glass">
+      <div>
+        <p class="eyebrow">Panel operativo</p>
+        <h1>Checklist de soporte técnico</h1>
+        <p class="hero-copy">
+          Flujo obligatorio de atención para clientes. Puedes administrar las actividades guardadas en la nube,
+          pero el progreso del checklist no se almacena.
+        </p>
+      </div>
+
+      <div class="meta-grid">
+        <article class="meta-box">
+          <span>Iniciales configuradas</span>
+          <strong id="configuredInitials">JDG</strong>
+        </article>
+        <article class="meta-box">
+          <span>Departamento configurado</span>
+          <strong id="configuredDepartment">Soporte Técnico</strong>
+        </article>
+        <article class="meta-box status-box" id="globalStatusBox">
+          <span>Estado del checklist</span>
+          <strong id="globalStatusText">Cargando actividades...</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <aside class="glass side-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Administración</p>
+            <h2>Actividades guardadas</h2>
+          </div>
+        </div>
+
+        <form id="activityForm" class="activity-form">
+          <label>
+            <span>Nombre de la actividad</span>
+            <input id="activityLabel" type="text" placeholder="Ej. Validar acceso remoto" maxlength="120" required />
+          </label>
+
+          <label>
+            <span>Tipo de actividad</span>
+            <select id="activityType">
+              <option value="check">Check (solo palomita)</option>
+              <option value="text">Texto (captura obligatoria)</option>
+            </select>
+          </label>
+
+          <button type="submit" class="btn btn-primary">Agregar actividad</button>
+        </form>
+
+        <div class="saved-list-wrapper">
+          <div class="saved-list-title-row">
+            <h3>Lista base</h3>
+            <span id="savedCountBadge" class="badge">0 actividades</span>
+          </div>
+          <ul id="savedActivities" class="saved-list"></ul>
+        </div>
+      </aside>
+
+      <section class="glass checklist-panel">
+        <div class="panel-header checklist-header">
+          <div>
+            <p class="eyebrow">Ejecución</p>
+            <h2>Checklist operativo</h2>
+          </div>
+          <button id="resetChecklistButton" class="btn btn-secondary" type="button">Vaciar checklist</button>
+        </div>
+
+        <div class="status-banner" id="checklistBanner">
+          Faltan actividades por completar.
+        </div>
+
+        <div id="checklistItems" class="checklist-items"></div>
+      </section>
+    </section>
+  </main>
+
+  <template id="savedActivityTemplate">
+    <li class="saved-item">
+      <div>
+        <p class="saved-item-label"></p>
+        <small class="saved-item-type"></small>
+      </div>
+      <button class="icon-btn delete-btn" type="button" title="Eliminar actividad">✕</button>
+    </li>
+  </template>
+
+  <template id="checkItemTemplate">
+    <article class="check-card">
+      <div class="check-card-top">
+        <div>
+          <span class="step-pill"></span>
+          <h3 class="check-item-label"></h3>
+        </div>
+        <span class="type-pill"></span>
+      </div>
+
+      <div class="check-item-body"></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
